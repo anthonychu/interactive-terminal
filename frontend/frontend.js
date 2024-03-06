@@ -3,7 +3,7 @@ const hostname = window.location.hostname;
 
 let backendUrl = 'ws://localhost:6060/';
 if (/-frontend/.test(hostname)) {
-    backendUrl = `wss://${hostname.replace(/-frontend/, '-backend')}/`;
+    backendUrl = `wss://${hostname.replace(/-frontend/, '')}/`;
 }
 
 const socket = new WebSocket(`${backendUrl}${queryString}`);
