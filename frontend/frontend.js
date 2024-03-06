@@ -1,8 +1,14 @@
+const queryString = window.location.search;
+const hostname = window.location.hostname;
 
-const socket = new WebSocket("ws://localhost:6060");
+let backendUrl = 'ws://localhost:6060/';
+if (/-frontend/.test(hostname)) {
+    backendUrl = `wss://${hostname.replace(/-frontend/, '-backend')}/`;
+}
+
+const socket = new WebSocket(`${backendUrl}${queryString}`);
 socket.onmessage = (event) => {
     term.write(event.data);
-
 }
 
 var term = new window.Terminal({
@@ -31,7 +37,6 @@ function init() {
 
 function runCommand(command) {
     socket.send(command);
-
 }
 
 init();
